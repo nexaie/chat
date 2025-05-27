@@ -1,11 +1,11 @@
 // Firebase Configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCwJSfAGzFc28lUpLhQCG25ybwEwyMyBP0",
-  authDomain: "chat-dc33d.firebaseapp.com",
-  projectId: "chat-dc33d",
-  storageBucket: "chat-dc33d.firebasestorage.app",
-  messagingSenderId: "463651786662",
-  appId: "1:463651786662:web:13f496299367af73da8967"
+  apiKey: "AIzaSyAPtuWW5NC4beqrGZRwYjAio_SPV9kqYhg",
+  authDomain: "sandbox-chatapp.firebaseapp.com",
+  projectId: "sandbox-chatapp",
+  storageBucket: "sandbox-chatapp.firebasestorage.app",
+  messagingSenderId: "830630085213",
+  appId: "1:830630085213:web:397987889c74b9d47403b4"
 };
 
 // Debugging Mode
