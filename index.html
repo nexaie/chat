@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexaier Group Chat</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>Nexaier Chat</h1>
+      <div id="user-count">Connecting...</div>
+    </div>
+    
+    <div id="auth-container">
+      <div id="sign-in-form">
+        <input type="text" id="username-input" placeholder="Choose a username" maxlength="20">
+        <button id="sign-in-btn">Join Chat</button>
+      </div>
+      <div id="connection-status">Connecting to server...</div>
+    </div>
+    
+    <div class="chat-area">
+      <div id="messages"></div>
+      <div id="typing-indicator"></div>
+      <div class="message-input">
+        <input type="text" id="message-input" placeholder="Type your message..." disabled>
+        <button id="send-btn" disabled>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
