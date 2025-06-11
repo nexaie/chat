@@ -1,45 +1,28 @@
-# Nexaier Group Chat
+# Nexa Chat - Real-time Messaging App
 
-A real-time group chat application hosted on GitHub Pages.
+A WhatsApp-like real-time chat application with Firebase backend and dark UI.
 
 ## Features
 
+- Google authentication
+- Email/password authentication
 - Real-time messaging
-- Online user count
-- Typing indicators
-- Offline detection
+- User search
+- Chat history persistence
 - Responsive design
+- Dark mode UI
 
-## Setup
+## Setup Instructions
 
-1. Clone this repository
-2. No build step required - just deploy to GitHub Pages
+1. Clone this repository or create these files in your GitHub Pages project.
+2. Make sure you have Firebase project set up with:
+   - Authentication enabled (Google and Email/Password providers)
+   - Firestore database with rules allowing read/write for authenticated users
+3. Deploy to GitHub Pages by pushing to your repository.
 
-## Deployment
 
-1. Create a new repository named `chat`
-2. Push these files to the `main` branch
-3. Enable GitHub Pages in repository settings
+## Notes
 
-The app will be available at: `https://nexaier.github.io/chat`
-
-## Firebase Configuration
-
-The app uses Firebase Firestore for real-time functionality. Make sure to:
-
-1. Enable Anonymous Authentication
-2. Set up Firestore with these security rules:
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /messages/{message} {
-      allow read, write: if request.auth != null;
-    }
-    match /users/{user} {
-      allow read: if true;
-      allow write: if request.auth != null && request.auth.uid == user;
-    }
-  }
-}
+- All chats and messages are stored in Firestore and persist until deleted.
+- Users are identified by unique usernames (from Google or email).
+- The app uses Firebase's real-time listeners for instant updates.
