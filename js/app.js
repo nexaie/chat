@@ -34,13 +34,21 @@ function init() {
             currentUser = user;
             setupUser(user);
             showAppScreen();
-            loadUserData();
+    
+            // Load user data with error handling
+            loadUserData().catch(error => {
+                console.error("Error loading user data:", error);
+            });
+    
+            // Listen for chats with error handling
             listenForChats();
         } else {
             // No user is signed in
             showAuthScreen();
         }
-    });
+    }, (error) => {
+        console.error("Auth state change error:", error);
+});
     
     // Event listeners
     googleSignInBtn.addEventListener('click', signInWithGoogle);
@@ -106,7 +114,6 @@ function loadUserData() {
         });
 }
 
-// Listen for chats
 function listenForChats() {
     db.collection('chats')
         .where('participants', 'array-contains', currentUser.uid)
@@ -116,18 +123,22 @@ function listenForChats() {
             chatList.innerHTML = '';
             
             querySnapshot.forEach((doc) => {
+                if (!doc.exists) return;
+                
                 const chat = doc.data();
                 chat.id = doc.id;
                 chats.push(chat);
                 
                 // Get the other participant's info
                 const otherUserId = chat.participants.find(id => id !== currentUser.uid);
+                
+                // Check if we already have this user's data
                 const otherUser = users.find(u => u.uid === otherUserId);
                 
                 if (otherUser) {
                     createChatListItem(chat, otherUser);
                 } else {
-                    // If we don't have the user info yet, fetch it
+                    // Fetch user data if we don't have it
                     db.collection('users').doc(otherUserId).get()
                         .then((userDoc) => {
                             if (userDoc.exists) {
@@ -135,9 +146,14 @@ function listenForChats() {
                                 users.push(userData);
                                 createChatListItem(chat, userData);
                             }
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching user data:", error);
                         });
                 }
             });
+        }, (error) => {
+            console.error("Error listening to chats:", error);
         });
 }
 
@@ -198,6 +214,8 @@ function loadMessages(chatId) {
             messagesContainer.innerHTML = '';
             
             querySnapshot.forEach((doc) => {
+                if (!doc.exists) return;
+                
                 const message = doc.data();
                 displayMessage(message);
             });
@@ -206,6 +224,8 @@ function loadMessages(chatId) {
             setTimeout(() => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 100);
+        }, (error) => {
+            console.error("Error loading messages:", error);
         });
 }
 
