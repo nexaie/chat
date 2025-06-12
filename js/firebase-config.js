@@ -6,7 +6,7 @@ const firebaseConfig = {
   storageBucket: "sandbox-chatapp.firebasestorage.app",
   messagingSenderId: "830630085213",
   appId: "1:830630085213:web:397987889c74b9d47403b4",
-  measurementId: "G-XXXXXXXXXX"
+  measurementId: "G-4JYNY3YCT9"
 };
 
 // Initialize Firebase
