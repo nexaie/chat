@@ -6,6 +6,7 @@ const appContainer = document.getElementById('app-container');
 const userListContainer = document.querySelector('.user-list-container');
 const chatContainer = document.getElementById('chat-container');
 const googleSignin = document.getElementById('google-signin');
+const signOutBtn = document.getElementById('signout-btn');
 const setUsernameBtn = document.getElementById('set-username');
 const newUsernameInput = document.getElementById('new-username');
 const usernameError = document.getElementById('username-error');
@@ -365,6 +366,16 @@ function sendMessage() {
     console.error('Error sending message:', error);
   });
 }
+
+// Sign Out Button Handler
+signOutBtn.addEventListener('click', () => {
+  auth.signOut().then(() => {
+    showToast('Signed out successfully', 'success');
+  }).catch((error) => {
+    showToast('Error signing out', 'error');
+    console.error('Sign out error:', error);
+  });
+});
 
 // Auth State Change Handler
 function handleAuthStateChange(user) {
