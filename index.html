@@ -1,117 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexa Chat - Private Messaging</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexaie Chat App</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Auth Screen -->
-        <div id="auth-screen" class="screen active">
-            <div class="auth-container">
-                <div class="logo">
-                    <span class="material-icons">chat_bubble</span>
-                    <h1>Nexa Chat</h1>
-                </div>
-                <p class="subtitle">Private messaging with end-to-end encryption</p>
-                
-                <div id="auth-error" class="error-message"></div>
-                
-                <div class="auth-form">
-                    <button id="google-signin" class="btn google-btn">
-                        <span class="material-icons">account_circle</span>
-                        Continue with Google
-                    </button>
-                    
-                    <div class="divider">
-                        <span>or</span>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Enter your email">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Enter your password">
-                    </div>
-                    
-                    <button id="email-signin" class="btn primary-btn">Sign In</button>
-                    <button id="email-signup" class="btn secondary-btn">Create Account</button>
-                </div>
-            </div>
+  <div class="stars"></div>
+  <div class="twinkling"></div>
+  
+  <div class="container">
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Auth Screens -->
+    <div id="auth-container" class="auth-container animate__animated animate__fadeIn">
+      <div class="logo">
+        <div class="logo-icon">🌌</div>
+        <h1>Nexaie Chat</h1>
+      </div>
+      
+      <div id="google-auth" class="auth-card">
+        <h2>Welcome to the Cosmos</h2>
+        <p>Connect with others across the universe</p>
+        <button id="google-signin" class="btn-google">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo">
+          Continue with Google
+        </button>
+      </div>
+
+      <div id="username-setup" class="auth-card" style="display: none;">
+        <h2>Choose Your Cosmic Identity</h2>
+        <div class="form-group">
+          <input type="text" id="new-username" placeholder="Enter unique username" autocomplete="off">
+          <div id="username-error" class="error-message"></div>
         </div>
-        
-        <!-- Main App Screen -->
-        <div id="app-screen" class="screen">
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <div class="user-profile">
-                        <img id="user-avatar" src="https://via.placeholder.com/40" alt="Profile">
-                        <span id="username-display">User</span>
-                    </div>
-                    <button id="logout-btn" class="icon-btn" title="Logout">
-                        <span class="material-icons">logout</span>
-                    </button>
-                </div>
-                
-                <div class="search-container">
-                    <span class="material-icons">search</span>
-                    <input type="text" id="user-search" placeholder="Search users...">
-                </div>
-                
-                <div class="chat-list" id="chat-list">
-                    <!-- Chats will be loaded here -->
-                </div>
-            </div>
-            
-            <div class="chat-area">
-                <div class="chat-header">
-                    <div id="current-chat-info">
-                        <img id="chat-avatar" src="https://via.placeholder.com/40" alt="Chat">
-                        <div>
-                            <h2 id="chat-name">Select a chat</h2>
-                            <p id="chat-status">Online</p>
-                        </div>
-                    </div>
-                    <div class="chat-actions">
-                        <button class="icon-btn" title="More options">
-                            <span class="material-icons">more_vert</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="messages-container" id="messages-container">
-                    <div class="empty-state">
-                        <span class="material-icons">forum</span>
-                        <p>Select a chat to start messaging</p>
-                    </div>
-                </div>
-                
-                <div class="message-input-container">
-                    <div class="emoji-picker">
-                        <button class="icon-btn" title="Emoji">
-                            <span class="material-icons">mood</span>
-                        </button>
-                    </div>
-                    <input type="text" id="message-input" placeholder="Type a message...">
-                    <button id="send-btn" class="icon-btn" title="Send">
-                        <span class="material-icons">send</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <button id="set-username" class="btn-primary">Claim Your Identity</button>
+      </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    <script src="js/firebase-config.js"></script>
-    <script src="js/app.js"></script>
+    <!-- Main App -->
+    <div id="app-container" style="display: none;">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <div class="logo-small">🌌</div>
+          <h1>Nexaie Chat</h1>
+        </div>
+        <div class="header-right">
+          <div id="user-profile" class="user-avatar"></div>
+        </div>
+      </header>
+
+      <!-- User List -->
+      <div class="user-list-container">
+        <div class="search-bar">
+          <input type="text" id="user-search" placeholder="Search across the cosmos...">
+          <div class="search-icon">🔍</div>
+        </div>
+        <div id="users-list" class="users-list"></div>
+      </div>
+
+      <!-- Chat Window -->
+      <div id="chat-container" class="chat-container" style="display: none;">
+        <div class="chat-header">
+          <button id="back-to-list" class="back-btn">←</button>
+          <div id="chat-with-user" class="chat-with-info">
+            <div class="chat-avatar"></div>
+            <div class="chat-user-details">
+              <div class="chat-username"></div>
+              <div class="chat-status"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="chat-messages" class="chat-messages"></div>
+        
+        <div class="chat-input-container">
+          <input type="text" id="message-input" placeholder="Type your message to the cosmos...">
+          <button id="send-btn" class="send-btn">🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
