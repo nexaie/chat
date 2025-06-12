@@ -290,7 +290,7 @@ function searchUsers() {
     const username = item.querySelector('.user-username').textContent.toLowerCase();
     const name = item.querySelector('.user-name').textContent.toLowerCase();
     
-    if (username.includes(searchTerm) {
+    if (username.includes(searchTerm)) {
       item.style.display = 'flex';
     } else if (name.includes(searchTerm)) {
       item.style.display = 'flex';
