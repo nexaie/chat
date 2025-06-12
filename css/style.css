@@ -264,6 +264,23 @@ body {
   transform: scale(1.1);
 }
 
+.signout-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signout-btn:hover {
+  transform: scale(1.1);
+}
+
 /* User List */
 .user-list-container {
   background: rgba(15, 14, 23, 0.8);
