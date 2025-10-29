@@ -1,0 +1,4 @@
+[
+  { "id": "user123", "name": "Bora", "dp": "https://example.com/dp1.jpg" },
+  { "id": "test01", "name": "Alice", "dp": "https://example.com/dp2.png" }
+]
